@@ -3,26 +3,28 @@
 const express = require('express')
 const router = express.Router()
 const productController = require('../controllers/productController')
-const upload = require('../middlewares/uploadCloudinaryMiddleware');
+const upload = require('../middlewares/uploadCloudinaryMiddleware')
+const isLoggedIn = require('../middlewares/authMiddleware')
+
 
 //CATÁLOGO PÚBLICO
 router.get('/products', productController.getAllProducts) //Devuelve todos los productos (página principal del catálogo)
 router.get('/products/:productId', productController.getProductById) //Devuelve el detalle de un producto específico
 
 //DASHBOARD
-router.get('/dashboard', productController.getDashboard) //Devuelve el dashboard con todos los productos subidos
+router.get('/dashboard', isLoggedIn, productController.getDashboard) //Devuelve el dashboard con todos los productos subidos
 
-router.get('/dashboard/new', productController.getNewProductForm) //Devuelve el formulario para subir un artículo nuevo
+router.get('/dashboard/new', isLoggedIn, productController.getNewProductForm) //Devuelve el formulario para subir un artículo nuevo
 
-router.post('/dashboard', upload.single('image'), productController.createProduct); //Crea un nuevo producto y lo guarda en la base de datos
+router.post('/dashboard', isLoggedIn, upload.single('image'), productController.createProduct); //Crea un nuevo producto y lo guarda en la base de datos
 
-router.get('/dashboard/:productId/edit', productController.getProductFormEdit) //Devuelve el formulario para editar un producto
+router.get('/dashboard/:productId/edit', isLoggedIn, productController.getProductFormEdit) //Devuelve el formulario para editar un producto
 
 
-router.get('/dashboard/:productId', productController.getProductDashboard) //Devuelve el detalle de un producto en el dashboard
-router.put('/dashboard/:productId', upload.single('image'), productController.updateProduct) //Actualiza un producto existente
+router.get('/dashboard/:productId', isLoggedIn, productController.getProductDashboard) //Devuelve el detalle de un producto en el dashboard
+router.put('/dashboard/:productId', isLoggedIn, upload.single('image'), productController.updateProduct) //Actualiza un producto existente
 
-router.delete('/dashboard/:productId', productController.deleteProduct) //Elimina un producto existente
+router.delete('/dashboard/:productId', isLoggedIn, productController.deleteProduct) //Elimina un producto existente
 
 // -------- API JSON -------- //
 /*

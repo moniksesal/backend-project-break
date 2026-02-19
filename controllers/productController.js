@@ -318,29 +318,36 @@ const ProductController = {
         }
     },
 
-    apiDeleteProduct: async (req, res) => { //DELETE
+    apiDeleteProduct: async (req, res) => {
         try {
-            const {productId} = req.params
-            
+            const { productId } = req.params
+
             if (!mongoose.Types.ObjectId.isValid(productId)) {
                 return res.status(400).json({message: 'Invalid ID'})
             }
 
             const product = await Product.findById(productId)
 
-            if(!product) {
-                return res.status(400).json({message: 'Product not found'})
+            if (!product) {
+                return res.status(404).json({ message: 'Product not found' });
             }
 
+            // Intentar borrar imagen (pero no bloquear si falla)
             if (product.imagePublicId) {
-                await cloudinary.uploader.destroy(product.imagePublicId)
+                try {
+                    await cloudinary.uploader.destroy(product.imagePublicId)
+                } catch (err) {
+                    console.error('Cloudinary deletion error:', err)
+                }
             }
 
             await Product.findByIdAndDelete(productId)
 
             res.status(200).json({message: 'Product deleted successfully'})
+
         } catch (error) {
-            res.status(500).json({ message: 'Server error' })
+            console.error('API delete error:', error)
+            res.status(500).json({message: 'Server error'})
         }
     }
     
