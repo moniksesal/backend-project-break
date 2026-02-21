@@ -1,6 +1,6 @@
 function getProductFormEdit(product = {}, action = '/dashboard', method = 'POST') {
     return `
-        <form action="${action}" method="${method}" enctype="multipart/form-data">
+        <form action="${action}" method="${method}" enctype="multipart/form-data" class="form-edit">
             <label>Nombre</label>
             <input type="text" name="name" value="${product.name || ''}" required>
 

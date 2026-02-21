@@ -149,17 +149,8 @@ const ProductController = {
                 return res.status(404).send('product not found')
             }
 
-            const productDetailHTML = `
-                <h1>${product.name}</h1>
-                <img src="${product.image}" alt="${product.name}">
-                <p>Precio: ${product.price}</p>
-                <p>Categoría: ${product.category}</p>
-                <p>${product.description}</p>
-                <p>Talla: ${product.size}</p>
+            const productDetailHTML = getProductDetail(product, 'dashboard')
 
-                <a href="/dashboard/${product._id}/edit"><button type="button">Editar</button></a>
-                <form action="/dashboard/${product._id}?_method=DELETE" method="POST"><button type="submit">Borrar</button></form>
-            `
             const html = template(product.name, productDetailHTML, 'dashboard')
 
             res.send(html)

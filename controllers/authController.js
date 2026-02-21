@@ -1,13 +1,24 @@
+const { template } = require('../helpers/template')
+
 const loginController = {
     showLoginForm: async (req, res) => {
-        res.send(`
-            <h2>Login</h2>
-            <form method="POST" action="/login">
-                <input type="text" name="username" placeholder="Usuario" required />
-                <input type="password" name="password" placeholder="Contraseña" required />
-                <button type="submit">Entrar</buton>
-            </form>
-        `)
+        const html = template(
+            'Login',
+            `
+            <nav class="login-nav">
+                <a href="/products">Volver al escaparate</a>
+            </nav>
+            <div class="login-container">
+                <h2>Login</h2>
+                <form method="POST" action="/login" class="login-form">
+                    <input type="text" name="username" placeholder="Usuario" required />
+                    <input type="password" name="password" placeholder="Contraseña" required />
+                    <button type="submit">Entrar</buton>
+                </form>
+            </div>
+            `, 'login'
+        )
+        res.send(html)
     },
 
     login: (req, res) => {

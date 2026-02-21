@@ -19,10 +19,11 @@ app.use(session({
     secret: process.env.SESSION_SECRET, //firma la sesión
     resave: false, //no guarda sesión si no hay cambios
     saveUninitialized: false, //no crea sesiones vacías
-    cookie: {secure: false} //necesario porque estoy en local
+    cookie: {maxAge: 1000 * 60 * 60} //para que se quede abierta la sesion 1h
 }))
 app.use(methodOverride('_method'))
 app.use(express.static('public')) //carpeta para CSS
+app.set('views engine', 'ejs')
 
 //Rutas
 app.use('/', productRoutes)
