@@ -269,13 +269,13 @@ const ProductController = {
         try {
             const productData = {
                 ...req.body,
-                image: req.file ? req.file.path : null,
+                image: req.file ? req.file.path : req.body.image,
                 imagePublicId: req.file ? req.file.filename : null
             }
             
             const newProduct = await Product.create(productData)
 
-            res.status(200).json(newProduct)
+            res.status(201).json(newProduct) //200: ok, 201: created - si el endpoint solo devuelve info 200; si crea algo nuevo 201
         } catch (error) {
             res.status(500).json({ message: 'Server error' })
         }
@@ -312,7 +312,7 @@ const ProductController = {
                 {new: true}
             )
 
-            res.status(200).json(updatedProduct)
+            res.status(201).json(updatedProduct)
         } catch (error) {
             res.status(500).json({ message: 'Server error' })
         }
@@ -350,7 +350,6 @@ const ProductController = {
             res.status(500).json({message: 'Server error'})
         }
     }
-    
 }
 
 module.exports = ProductController
