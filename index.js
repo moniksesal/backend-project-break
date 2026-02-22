@@ -6,6 +6,8 @@ const productController = require('./controllers/productController')
 const connectDB = require('./config/db')
 const session = require('express-session')
 const authRoutes = require('./routes/authRoutes')
+const swaggerUI = require('swagger-ui-express')
+const swaggerSpec = require('./docs/basicInfo');
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -24,6 +26,7 @@ app.use(session({
 app.use(methodOverride('_method'))
 app.use(express.static('public')) //carpeta para CSS
 app.set('views engine', 'ejs')
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
 //Rutas
 app.use('/', productRoutes)
