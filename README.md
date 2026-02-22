@@ -122,7 +122,7 @@ Los tests verifican:
 
 ## Deploy
 
-App desplegada en <URL_DE_PRODUCCION>
+App desplegada en https://backend-project-break-xd3i.onrender.com/
 
 ## Documentación API (Swagger)
 

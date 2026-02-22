@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node --watch index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "cloudinary": "^1.41.3",
