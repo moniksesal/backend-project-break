@@ -65,7 +65,15 @@ const ProductController = {
 
     getDashboard: async (req, res) => {
         try {
-            const products = await Product.find()
+            const category = req.query.category
+            let products = []
+
+            if (category) {
+                products = await Product.find({category})
+            } else {
+                products = await Product.find()
+            }
+
             const productCards = getProductCards(products, 'dashboard')
 
             const html = template(

@@ -133,8 +133,3 @@ http://localhost:4000/api-docs
 ## Autor
 
 Mónica Serrano Salazar
-
-## chatgpt: 
-como subir con claudinary
-como usar login
-swagger (aun no he hecho la parte de swagger)
